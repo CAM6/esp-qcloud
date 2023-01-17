@@ -160,7 +160,7 @@ typedef esp_err_t (*esp_qcloud_get_param_t)(const char *id, esp_qcloud_param_val
  * @brief Interface method set_param.
  * 
  */
-typedef esp_err_t (*esp_qcloud_set_param_t)(const char *id, const esp_qcloud_param_val_t *val);
+typedef esp_err_t (*esp_qcloud_set_param_t)(const char *id, const esp_qcloud_param_val_t *val, uint8_t mode);
 
 /**
  * @brief Add device property callback function, set and get.

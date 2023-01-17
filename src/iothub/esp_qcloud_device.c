@@ -288,7 +288,7 @@ esp_err_t esp_qcloud_handle_set_param(const cJSON *request_params, cJSON *reply_
                 break;
         }
 
-        err = g_esp_qcloud_set_param(item->string, &value);
+        err = g_esp_qcloud_set_param(item->string, &value, 0);
         ESP_QCLOUD_ERROR_BREAK(err != ESP_OK, "<%s> esp_qcloud_set_param, id: %s",
                                esp_err_to_name(err), item->string);
     }
