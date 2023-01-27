@@ -386,7 +386,7 @@ bool esp_qcloud_iothub_is_connected(void);
  *     - ESP_OK: succeed
  *     - others: fail
  */
-esp_err_t esp_qcloud_iothub_ota_enable(void);
+// esp_err_t esp_qcloud_iothub_ota_enable(void);
 
 /**
  * @brief Add int type data to the handle method.
