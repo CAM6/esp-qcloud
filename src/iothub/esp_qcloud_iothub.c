@@ -330,9 +330,14 @@ static void esp_qcloud_iothub_log_callback(const char *topic, void *payload, siz
         esp_qcloud_log_get_config(&config);
 
         config.log_level_iothub = cJSON_GetObjectItem(request_data, "log_level")->valueint;
-        ESP_LOGI(TAG, "log_level: %d", config.log_level_iothub);
+        config.log_level_uart = cJSON_GetObjectItem(request_data, "log_level")->valueint;
 
         esp_qcloud_log_set_config(&config);
+        
+        ESP_LOGI(TAG, "log_level: %d", config.log_level_iothub);
+
+        esp_err_t ret = esp_qcloud_storage_set("LOG_STORE_KEY",  &config, sizeof(esp_qcloud_log_config_t));
+        ESP_QCLOUD_ERROR_CHECK(ret < 0, ESP_FAIL, "esp_qcloud_storage_set, ret: %d", ret);  
     }
 
 EXIT:
