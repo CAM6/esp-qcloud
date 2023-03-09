@@ -589,7 +589,9 @@ static void esp_qcloud_iothub_action_callback(const char *topic, void *payload, 
 
     esp_qcloud_method_t *action = esp_qcloud_iothub_create_action();
     action->extra_val->token    = token;
-    action->extra_val->code     = esp_qcloud_operate_action(action, action_id, params_str);
+    action->extra_val->code     = 0;
+
+    esp_qcloud_iothub_param_add_int(action, "code", esp_qcloud_operate_action(action, action_id, params_str));
 
     ESP_QCLOUD_FREE(params_str);
     esp_qcloud_iothub_post_method(action);
