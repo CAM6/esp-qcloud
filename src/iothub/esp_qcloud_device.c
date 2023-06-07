@@ -262,6 +262,7 @@ esp_err_t esp_qcloud_device_add_property_cb(const esp_qcloud_get_param_t get_par
 esp_err_t esp_qcloud_handle_set_param(const cJSON *request_params, cJSON *reply_data)
 {
     esp_err_t err = ESP_FAIL;
+    char *str_data  = NULL;
 
     for (cJSON *item = request_params->child; item; item = item->next) {
         esp_qcloud_param_val_t value = {0};
@@ -284,6 +285,10 @@ esp_err_t esp_qcloud_handle_set_param(const cJSON *request_params, cJSON *reply_
                 value.s = item->valuestring;
                 break;
 
+            case cJSON_Object:
+                str_data = cJSON_PrintUnformatted(item);
+                value.s = str_data;
+                break;
             default:
                 break;
         }
@@ -291,6 +296,9 @@ esp_err_t esp_qcloud_handle_set_param(const cJSON *request_params, cJSON *reply_
         err = g_esp_qcloud_set_param(item->string, &value, 0);
         ESP_QCLOUD_ERROR_BREAK(err != ESP_OK, "<%s> esp_qcloud_set_param, id: %s",
                                esp_err_to_name(err), item->string);
+        
+        if(item->type == cJSON_Object)
+            ESP_QCLOUD_FREE(str_data);
     }
 
     return err;
